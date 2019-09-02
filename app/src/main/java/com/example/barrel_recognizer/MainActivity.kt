@@ -32,6 +32,7 @@ class MainActivity : BaseActivity() {
         imagePreview = findViewById(R.id.image_preview)
         textView = findViewById(R.id.result_text)
         findViewById<Button>(R.id.photo_camera_button)?.setOnClickListener { takePhoto() }
+        findViewById<Button>(R.id.photo_library_button)?.setOnClickListener { chooseFromLibrary() }
 
         // ImageClassifier クラスを初期化
         try {
@@ -85,6 +86,17 @@ class MainActivity : BaseActivity() {
                 }
             }
         }
+    }
+
+    /** ライブラリから画像を選択する **/
+    private fun chooseFromLibrary() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+
+        val mimeTypes = arrayOf("image/jpeg", "image/png")
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
+
+        startActivityForResult(intent, REQUEST_PHOTO_LIBRARY)
     }
 
     /** カメラで撮った写真をJPEG形式に変換する */
